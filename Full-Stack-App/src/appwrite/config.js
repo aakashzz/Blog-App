@@ -44,7 +44,7 @@ export class Service {
             }
          );
       } catch (error) {
-         console.log(error);
+         console.log("Update post error detect ", error);
       }
    }
    async deletePost(slug) {
@@ -55,7 +55,7 @@ export class Service {
             slug
          );
       } catch (error) {
-         console.log(error);
+         console.log("delete post error detect", error);
       }
    }
    async getPost(slug) {
@@ -105,11 +105,8 @@ export class Service {
          console.log(error);
       }
    }
-   getFilePreview(fileId){
-        return this.bucket.getFilePreview(
-            conf.appWriteBucketId,
-            fileId
-        )
+   getFilePreview(fileId) {
+      return this.bucket.getFilePreview(conf.appWriteBucketId, fileId);
    }
 }
 
