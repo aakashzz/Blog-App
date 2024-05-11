@@ -22,22 +22,24 @@ export class AuthService {
          );
          if (userAccount) {
             // call another method
+            console.log(userAccount)
             return this.login({ email, password });
          } else {
             return userAccount;
          }
       } catch (error) {
-         throw error;
+         console.log("Create Account error ",error)
+         throw error
       }
    }
 
-   async login({ email, password }) {
+   async login({email, password}) {
       try {
-         return await this.account.createEmailSession(email, password);
+         return await this.account.createEmailPasswordSession(email, password);
       } catch (error) {
-         throw error;
+          throw error;
       }
-   }
+  }
 
    async getCurrentUser() {
       try {

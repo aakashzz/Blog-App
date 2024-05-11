@@ -28,6 +28,7 @@ export class Service {
          );
       } catch (error) {
          console.log(error);
+         throw error
       }
    }
    async updatePost(slug, { title, content, featuredImage, status }) {
@@ -106,7 +107,7 @@ export class Service {
       }
    }
    getFilePreview(fileId) {
-      return this.bucket.getFilePreview(conf.appWriteBucketId, fileId);
+      return this.bucket.getFilePreview(conf.appWriteBucketId,fileId);
    }
 }
 
