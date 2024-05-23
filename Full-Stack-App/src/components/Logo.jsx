@@ -4,7 +4,7 @@ import React from 'react'
 function Logo() {
   return (
     <div>
-      <img src="../../public/vite.svg" alt="" />
+      <img src="../../public/Blog logo.svg" alt="" />
     </div>
   )
 }

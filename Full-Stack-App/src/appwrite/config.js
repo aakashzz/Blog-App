@@ -27,7 +27,7 @@ export class Service {
             }
          );
       } catch (error) {
-         console.log(error);
+         // console.log(error);
          throw error
       }
    }
@@ -78,6 +78,7 @@ export class Service {
             conf.appWriteCollectionId,
             queries
          );
+         
       } catch (error) {
          console.log(error);
       }
@@ -94,7 +95,7 @@ export class Service {
          );
       } catch (error) {
          console.log(error);
-         return false;
+         return error;
       }
    }
 

@@ -4,6 +4,7 @@ import { Button, Input, Select, RTE } from "../Index";
 import appwriteService from "../../appwrite/config";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
+
 function PostForm(post) {
    const { register, handleSubmit, watch, setValue, getValues, control } =
       useForm({
@@ -16,33 +17,39 @@ function PostForm(post) {
       });
    const navigate = useNavigate();
    const userData = useSelector((state) => state.auth.userData);
-   const submit = async (data) => {
+   const Submit = async (data) => {
       console.log(data);
+      console.log(post.post.$createdAt)
       if (post) {
-         const file = data.image[0]
-            ? await appwriteService.uploadFile(data.image[0])
-            : null;
-         if (file) {
-            appwriteService.deleteFile(post.featuredImage);
-         }
-         const dbPost = await appwriteService.updatePost(post.$id, {
-            ...data,
-            featuredImage: file ? file.$id : undefined,
-         });
-         if (dbPost) {
-            navigate(`/post/${dbPost.$id}`);
-         }
-      } else {
-         const file = await appwriteService.uploadFile(data.image[0]);
+         console.log(post.post.$id)
+         const file = data.image[0] ? await appwriteService.uploadFile(data.image[0]) : null;
 
+         if (file) {
+             appwriteService.deleteFile(post.featuredImage);
+             console.log(file)
+         }
+
+         const dbPost = await appwriteService.updatePost(post.post.$id, {
+             ...data,
+             featuredImage: file ? file.$id : undefined,
+         });
+
+         if (dbPost) {
+             navigate(`/post/${dbPost.$id}`);
+         }
+     }
+       else {
+         const file = await appwriteService.uploadFile(data.image[0]);
+         console.log(data)
          if (file) {
             const fileId = file.$id;
             data.featuredImage = fileId;
-
+            alert("else condition down")
             const dbPost = await appwriteService.createPost({
                ...data,
                userId: userData.$id,
             });
+            console.log(dbPost)
             if (dbPost) {
                navigate(`/post/${dbPost.$id}`);
             }
@@ -64,17 +71,15 @@ function PostForm(post) {
       const subscription = watch((value, { name }) => {
          if (name === "title") {
             setValue(
-               "slug",
-               slugTransform(value.title, { shouldValidate: true })
+               "slug", slugTransform(value.title, { shouldValidate: true })
             );
          }
       });
-      return () => {
-         subscription.unsubscribe();
-      };
+      return () => subscription.unsubscribe();
+      
    }, [watch, slugTransform, setValue]);
    return (
-      <form onSubmit={handleSubmit(submit)} className="flex flex-wrap">
+      <form onSubmit={handleSubmit(Submit)} className="flex flex-wrap">
          <div className="w-2/3 px-2">
             <Input
                label="Title :"
@@ -117,18 +122,18 @@ function PostForm(post) {
                   /> */}
                </div>
             )}
-            <Select
-               options={["active", "inactive"]}
+            {/* <Select
+               options={["active", "inactive","Default"]}
                label="Status"
                className="mb-4"
                {...register("status", { required: true })}
-            />
+            /> */}
             <Button
                type="submit"
-               bgColor={post ? "bg-green-500" : undefined}
+               bgColor={post ? "bg-blue-600" : undefined}
                className="w-full"
             >
-               {post ? "Update" : "Submit"}
+               {post ? "Submit" : "Update"}
             </Button>
          </div>
       </form>

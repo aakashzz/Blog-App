@@ -16,11 +16,9 @@ function Login() {
       setError("");
       try {
          const session = await authService.login(data);
-         console.log(data)
          if (session) {
             const userData = await authService.getCurrentUser();
             if (userData) {
-               console.log("This userData",data)
                dispatch(authLogin(userData));
                navigate("/");
             }
@@ -34,11 +32,11 @@ function Login() {
    return (
       <div className="flex item-center justify-center w-full">
          <div
-            className={`mx-auto w-full max-w-lg bg-gray-100 rounded-xl p-10 border-black/10`}
+            className={`mx-auto w-full max-w-lg bg-white rounded-xl p-10 border `}
          >
             <div className="mb-2 flex justify-center">
                <span className="inline-block w-full max-w-[100px]">
-                  <Logo width="100%" />
+                  <img src="../../public/Blog logo black.svg" alt="" />
                </span>
             </div>
             <h2 className="text-center text-2xl font-bold leading-tight">

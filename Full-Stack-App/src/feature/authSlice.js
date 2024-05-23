@@ -18,7 +18,9 @@ const authSlice = createSlice({
          state.userData = null;
       },
    },
-});
+});   
+
+
 
 export default authSlice.reducer;
 
